@@ -1,0 +1,52 @@
+CREATE DATABASE Course_Reg_Sys;
+
+USE Course_Reg_Sys;
+
+CREATE TABLE STUDENTS(stu_id INT NOT NULL, stu_name VARCHAR(100), stu_mobile VARCHAR(100), stu_email VARCHAR(100), PRIMARY KEY(stu_id));
+
+CREATE TABLE COURSES(cors_id VARCHAR(100) NOT NULL, cors_stu_id INT, cors_type VARCHAR(100), cors_name VARCHAR(100), cors_desc VARCHAR(100), PRIMARY KEY(cors_id), FOREIGN KEY (cors_stu_id) REFERENCES STUDENTS(stu_id));
+
+CREATE TABLE REGISTRATIONS(reg_id INT NOT NULL, reg_stu_id INT, reg_cors_id VARCHAR(100), reg_date DATE, reg_desc VARCHAR(100), PRIMARY KEY(reg_id), FOREIGN KEY (reg_stu_id) REFERENCES STUDENTS(stu_id), FOREIGN KEY (reg_cors_id) REFERENCES COURSES(cors_id));
+
+CREATE TABLE FEES(fees_id INT NOT NULL, fees_type VARCHAR(100), fees_stu_id INT, fees_desc VARCHAR(100), fees_amt VARCHAR(100), PRIMARY KEY(fees_id), FOREIGN KEY(fees_stu_id) REFERENCES STUDENTS(stu_id));
+
+
+
+
+INSERT INTO STUDENTS VALUES(1000, 'Sarala', '9852147369', 'srlss@gmail.com'), 
+(1001, 'Srilekha', '8954762314', 'sleha@gmail.com'),
+(1002, 'Saikumar','9854612359','sai13@yahoo.com'),
+(1003, 'Lakshmi','9832169459','lkspy@gmail.com');
+
+INSERT INTO COURSES VALUES('DP001', 1000, 'Diploma','IT Admin','Two Year'),
+('CT001',1001,'Certificate','Data Analytics','Six month'), 
+('DP002', 1002,'Diploma','Cyber Security','Two Year'),
+('CT002', 1003,'Certificate','Network Security','Six Month');
+
+INSERT INTO REGISTRATIONS VALUES(5001,1000,'DP001','2022-11-10','Completed'),
+(5002,1001,'CT001','2022-11-10','Completed'),
+(5003,1002,'DP002','2022-11-11','Pending'),
+(5004,1003,'CT002','2022-11-11','Completed');
+
+INSERT INTO FEES VALUES(001,'Yearly',1000,'Tuition Fees','20,000'),
+(002,'Monthly','1001','Tuition Fees','1,500'),
+(003,'Monthly',1003,'Tuition Fees','2,000');
+
+
+
+
+MYSQL QUERIES:
+
+1) Select all Course name from Courses that have the word 'Security' in it:
+SELECT * FROM COURSES WHERE cors_name LIKE '%Security%';
+
+2) Select all details where the registration is pending from Registrations:
+SELECT * FROM REGISTRATIONS WHERE reg_desc = 'Pending';
+
+
+3) List all the students details sorted by Students name:
+SELECT * FROM STUDENTS ORDER BY stu_name;
+
+
+
+
